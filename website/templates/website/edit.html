@@ -1,0 +1,69 @@
+{% extends 'website/header.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %} Insder | Edit{% endblock %}</title>
+</head>
+<body>
+
+{% block content %}
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+
+    <button type="button" class="navbar-toggler" data-toggle="collapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav">
+            <a href="/" class="nav-item nav-link">Insder</a>
+        </div>
+        <div class="navbar-nav ml-auto">
+            <a href="#" class="nav-item mr-3">{{request.session.adminname}}</a> | <a href = "/logout/" class = "ml-3">Log Out</a>
+            <div class="dropdown-menu">
+                    <a href="#" class="dropdown-item">Log Out</a>
+                </div>
+        </div>
+    </div>
+</nav>
+
+<div class="portfolio">
+  <div class="row">
+    <div class="col-md-12">
+  <div class="bio-info">
+  <table class = "table">         	
+  	<tr>
+  		<th>ID</th>
+  		<th>First Name</th>
+  		<th>Last Name</th>
+  		<th>Username</th>
+      <th>Password</th>
+      <th>Email</th>
+      <th>Bio</th>
+  		<th>Image</th>
+  	</tr>
+    <tr>
+      <form method = "POST" action = "/update/">
+        {% csrf_token %}
+          	<td><input type = "text" name = "user_id" value = "{{users.user_id}}" readonly="true"></input></td>
+          	<td><input type = "text" name = "fname" value ="{{users.fname}}"></input></td>
+          	<td><input type = "text" name = "lname" value ="{{users.lname}}"></input></td>
+          	<td><input type = "text" name = "username" value = "{{users.username}}"></input></td>
+            <td><input type = "text" name = "password" value = "{{users.password}}"></input></td>
+            <td><input type = "text" name = "email" value = "{{users.email}}"></input></td>            
+            <td><textarea name = "bio">{{users.bio}}</textarea></td>
+          	<td><img src = "../website/static/images/{{users.image}}" height = "50px" width = "50px"></td>
+          </tr>
+     </table>
+     <button type = "submit" class = "btn-cusbtn btn">Update</button>
+   </form>
+          	</div>
+          </div>
+      </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
+{% endblock %}

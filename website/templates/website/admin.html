@@ -1,0 +1,103 @@
+{% extends 'website/header.html' %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %} Insder | Admin Dashboard{% endblock %}</title>
+</head>
+<body>
+{% block content %}
+        {% if request.session.adminname %}
+        
+<nav class="navbar navbar-expand-md navbar-light bg-light">
+
+    <button type="button" class="navbar-toggler" data-toggle="collapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+        <div class="navbar-nav">
+            <a href="/" class="nav-item nav-link">Insder</a>
+        </div>
+        <div class="navbar-nav ml-auto">
+            <a href="#" class="nav-item mr-3">{{request.session.adminname}}</a> | <a href = "/logout/" class = "ml-3">Log Out</a>
+            <div class="dropdown-menu">
+                    <a href="#" class="dropdown-item">Log Out</a>
+                </div>
+        </div>
+    </div>
+</nav>
+
+<div class=" portfolio">
+  <div class="row">
+    <div class="col-md-12">
+  <div class="bio-info">
+  <table class = "table">         	
+  	<tr class = "tables">
+  		<th>ID</th>
+  		<th>First Name</th>
+  		<th>Last Name</th>
+  		<th>Username</th>
+  		<th>Password</th>
+  		<th>Email</th>
+  		<th>Bio</th>
+  		<th>Image</th>
+
+  	</tr>
+		{% for u in users%}
+		<tr>
+          	<td>{{u.user_id}}</td>
+          	<td>{{u.fname}}</td>
+          	<td>{{u.lname}}</td>
+          	<td>{{u.username}}</td>
+          	<td>{{u.password}}</td>
+          	<td>{{u.email}}</td>
+          	<td>{{u.bio}}</td>
+          	<td><img src = "../website/static/images/{{u.image}}" height = "50px" width = "50px"></td>
+          	<td><a class ="link"  href = "/edit/{{u.user_id}}">Edit</a> | <a href = "/delete/{{u.user_id}}" onclick = "return sureDelete();">Delete</a></td>
+          </tr>
+         {% endfor %}
+     </table>
+     {% if users.paginator.num_pages > 1 %}
+
+    <div class="text-center">
+        {% if users.has_previous %}
+            <a href="?page=1">First</a>
+            <a href="?page={{ users.previous_page_number }}">Previous</a>
+        {% endif %}
+        <span>{{ users.number }}</span><span>of</span> <span>{{ users.paginator.num_pages }}</span>
+        {% if users.has_next %}
+            <a href="?page={{ users.next_page_number }}">Next</a>
+            <a href="?page={{ users.paginator.num_pages }}">Last</a>
+        {% endif %}
+    </div>
+
+{% endif %}
+          	</div>
+          </div>
+      </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+{% else %}
+<div class=" portfolio">
+  <div class="row">
+    <div class="col-md-12">
+  <div class="bio-info">
+  <table class = "table">
+	<h1>NOT AUTHORIZED</h1>
+	<a href = "/">Back to Homepage</a>
+	
+	</div>
+</table>
+
+</div></div></div></div></div></div>
+
+
+{%endif%}
+</body>
+</html>
+
+{% endblock %}

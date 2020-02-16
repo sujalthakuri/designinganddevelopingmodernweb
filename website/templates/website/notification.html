@@ -1,0 +1,38 @@
+{%extends 'website/nav.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %} Insder | Notification{% endblock %}</title>
+</head>
+<body>
+{% block content %}
+	{%load static %}
+{% for u in users %}
+
+<div class="container portfolio">
+  <div class="row">
+    <div class="col-md-12">
+  <div class="bio-info">
+    <div class="row">
+      <div class="col-md-6">
+            </div>      
+          </div>
+      <div class="col-md-12">
+        <div class="bio-content">
+        	<div class="bio-image"> 
+        	<a href = "/userprofile/{{u.user_id}}">   
+              <img src="{% static '../website/static/images/' %}{{u.image}}" height="50" width = "60" />
+            </div>
+          <p><b>{{u.username}}</b></a> has started following you.</p>
+          </div>
+        </div>
+        </div> 
+  </div>
+</div>
+</div>
+
+{% endfor %}
+{% endblock %}
+
+</body>
+</html>

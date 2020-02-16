@@ -1,0 +1,67 @@
+{% extends 'website/nav.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %} Insder | Profile{% endblock %}</title>
+</head>
+<body>
+
+</body>
+</html>
+
+{% block content %}
+{% load static %}
+
+<body onload = "upload_image(),update_bio()">
+<div class="container portfolio">
+  <div class="row">
+    <div class="col-md-12">
+  <div class="bio-info">
+        <div class="row">
+          <div class="col-md-12">
+			<img class = "mt-5 mb-2 border" src = "{% static '../website/static/images/' %}{{user.image}}" height = "320px" width = "280px">
+			<p class = "font-color" onclick="upload_image()">Change Profile Picture?</p>
+			<form id = "upload_image" name = "u_i" method="post" action="/upload/" enctype="multipart/form-data" onsubmit = "return pimage_validation()">
+				{% csrf_token %}
+				<input type = "file" name = "myfile">
+				<button  class = "btn-cusbtn btn mt-2" type = "submit">UPLOAD</button>
+			</form>
+			<h3>{{user.bio}}</h3>
+			<p class = "font-color form-group purple-border" onclick="update_bio()">Change Bio?</p>
+			<form id = "bio" method = "post" action = "/bio/" onsubmit = "return validation()">
+				{% csrf_token %}
+				<input type = "textarea" class="form-control" rows="3" name = "bio" id = "bio" placeholder="Bio">
+				<button type = "submit" class = "btn-cusbtn btn mt-2">Submit</button>
+			</form>
+			<h5 class = "mb-4 mt-2 font-color">Follower : {{follower}}   Following : {{following}}</h5>
+
+			<h2 class = "mb-4 mt-2 font-color">Profile</h2>
+			<p class = "font-color">Name : </p><p>{{user.fname}} {{user.lname}}</p>
+			<p class = "font-color">Username :</p><p> {{user.username}}</p>
+			<p class = "font-color">Email :</p><p> {{user.email}}</p>
+			<hr class = "p-4">
+				<h2 class = "font-color">Pictures</h2>
+				<div class = "row" id = "pictures">
+					{% if image_show %}
+					{% for i in image_show %}
+						<div class = "col-md-6">
+						<img class = "mt-5 mb-2 border" src = "{% static '../website/static/images/' %}{{i.image}}" height = "420px" width = "320px">
+					</div>
+						
+					{% endfor %}
+					{% endif %}
+
+		</div>
+	</div>
+</div>
+<p class = "font-color">Upload Photo?</p>
+<form id = "upload_photo" name = "upload_photo" method = "POST" action = "/upload_photo/" enctype="multipart/form-data" onsubmit = "return image_validation()">
+	{% csrf_token %}
+	<input type = "file" name = "myfile" id = "myfile">
+	<button type = "submit" class = "btn-cusbtn btn">Upload</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+{% endblock %}

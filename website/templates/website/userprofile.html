@@ -1,0 +1,59 @@
+{% extends 'website/nav.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %} Insder | {{user.username}}{% endblock %}</title>
+</head>
+<body>
+
+</body>
+</html>
+
+{% block content %}
+{% load static %}
+<body>
+	<div class="container portfolio">
+  <div class="row">
+    <div class="col-md-12">
+  <div class="bio-info">
+        <div class="row">
+          <div class="col-md-12">
+			<img class = "mt-5 mb-2 border" src = "{% static '../website/static/images/' %}{{user.image}}" height = "320px" width = "280px">
+			<h3>{{user.bio}}</h3>
+			<h5 class = "mb-4 mt-2 font-color">Follower : {{follower}}   Following : {{following}}</h5>
+			<h2 class = "mb-4 mt-2 font-color">Profile</h2>
+			<p class = "font-color">Name : </p><p>{{user.fname}} {{user.lname}}</p>
+			<p class = "font-color">Username :</p><p> {{user.username}}</p>
+			<p class = "font-color">Email :</p><p> {{user.email}}</p>
+			{% if not followed %}
+			<form method = "POST" action = "/follow_user/">
+				{% csrf_token %}
+				<input type = "hidden" value = "{{user.user_id}}" name = "profile_id">
+				<input type = "hidden" value = "{{request.session.user_id}}" name = "user_id">
+				<input type = "submit" class = "btn-cusbtn btn" id = "notFollowed" value = "Follow">
+			</form>
+			<h1>Please Follow to View Profile</h1>
+			{% endif %}
+
+			{% if followed %}
+				<input type = "button" class = "btn-cusbtn btn" id = "followed" value = "{{followed}}">
+			
+			<hr class = "p-4">
+				<h2 class = "font-color">Pictures</h2>
+				<div class = "row" id = "pictures">
+					{% if image_user %}
+					{% for i in image_user %}
+				<div class = "col-md-6">
+					<img class = "mt-5 mb-2 border" src = "{% static '../website/static/images/' %}{{i.image}}" height = "420px" width = "420px">
+</div>
+					{% endfor %}
+					{% endif %}
+					{% endif %}
+		</div>
+	</div>
+</div></div>
+</div>
+</div>
+</div>
+
+{% endblock %}
